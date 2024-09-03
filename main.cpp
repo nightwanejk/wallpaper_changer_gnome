@@ -7,14 +7,15 @@
 
 #define INTERVAL 600
 
-std::vector<std::string> get_images_from_folder(const std::string& folder_path){
+std::vector<std::string> get_images_from_folder(const std::string& folder_path)
+{
     std::vector<std::string> images;
     DIR* dir;
     struct dirent* entry;
 
-    if( (dir = opendir(folder_path.c_str())) != nullptr){
-        while((entry = readdir(dir)) != nullptr){
-            if(entry->d_type == DT_REG){
+    if((dir = opendir(folder_path.c_str())) != nullptr) {
+        while((entry = readdir(dir)) != nullptr) {
+            if(entry->d_type == DT_REG) {
                 images.push_back(folder_path + "/" + entry->d_name);
             }
         }
@@ -25,10 +26,10 @@ std::vector<std::string> get_images_from_folder(const std::string& folder_path){
     return images;
 }
 
-void set_wallpaper(const std::string& imagePath, bool dark_mode){
+void set_wallpaper(const std::string& image_path, bool dark_mode){
     std::string command = dark_mode ?
-                              "gsettings set org.gnome.desktop.background picture-uri-dark file://" + imagePath :
-                              "gsettings set org.gnome.desktop.background picture-uri file://" + imagePath;
+                              "gsettings set org.gnome.desktop.background picture-uri-dark file://" + image_path :
+                              "gsettings set org.gnome.desktop.background picture-uri file://" + image_path;
     system(command.c_str());
 }
 
@@ -64,5 +65,4 @@ int main()
     }
 
     return 0;
-
 }
